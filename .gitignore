@@ -1,0 +1,37 @@
+# --- Zsh Runtime Artifacts ---
+.zsh_history
+.zsh_history.new
+.zsh_history.old
+.zcompdump*
+.zcompcache/
+cache/
+
+# --- Local Overrides (Host Specific / Sensitive) ---
+# Use .local.zsh for your private environment variables and machine-specific tweaks.
+.local.zsh
+*.secret.zsh
+.env
+.env.*
+
+# --- System & IDE Files ---
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.directory
+.cursorignore
+.chezmoiignore
+
+# --- Python / Development ---
+.venv/
+__pycache__/
+node_modules/
+dist/
+build/
+*.log
+
+# --- Specific Tooling ---
+.python-version
+.node-version
+.fnm
+.uv
