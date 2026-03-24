@@ -1,0 +1,121 @@
+shell = "zsh"
+
+# --- 0. PLUGIN TEMPLATES ---
+
+# Global path management (fpath for completions, path for binaries)
+apply = ["fpath", "path", "source"]
+
+[templates]
+# Source template with hooks support
+source = """
+{{ hooks?.pre | nl }}{% for file in files %}source "{{ file }}"
+{% endfor %}{{ hooks?.post | nl }}"""
+
+# Turbo template (Async via zsh-defer)
+defer = """
+{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source "{{ file }}"
+{% endfor %}{{ hooks?.post | nl }}"""
+
+# Turbo template with command check
+if-command = """
+if (( $+commands[{{ name }}] )); then
+  {{ hooks?.pre | nl }}{% for file in files %}zsh-defer source "{{ file }}"
+  {% endfor %}{{ hooks?.post | nl }}
+fi"""
+
+[plugins]
+
+# Sets P10K config path before engine loading to avoid wizard
+# To customize prompt, run `p10k configure` or edit ${ZDOTDIR}/themes/powerlevel10k-config.zsh.
+[plugins.powerlevel10k-config]
+inline = 'export POWERLEVEL9K_CONFIG_FILE="${ZDOTDIR}/themes/powerlevel10k-config.zsh"'
+
+# --- 0. POWERLEVEL10K ---
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+# Execute in first (required by p10k architecture)
+[plugins.p10k-instant-prompt]
+inline = '''
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+'''
+
+[plugins.powerlevel10k]
+github = "romkatv/powerlevel10k"
+apply = ["source"]
+
+# --- 1. CORE ENGINE ---
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+apply = ["source"]
+
+[plugins.core]
+local = "core"
+use = [
+  # "options.zsh",
+  # "history.zsh",
+  "*.zsh",
+]
+apply = ["source"]
+
+# --- 2. PLUGINS (TURBO MODE) ---
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+apply = ["fpath", "path", "defer"]
+
+# [plugins.zsh-syntax-highlighting]
+# github = "zsh-users/zsh-syntax-highlighting"
+# apply = ["fpath", "path", "defer"]
+
+[plugins.fast-syntax-highlighting]
+github = "zdharma-continuum/fast-syntax-highlighting"
+apply = ["fpath", "path", "defer"]
+
+[plugins.zsh-history-substring-search]
+github = "zsh-users/zsh-history-substring-search"
+apply = ["fpath", "path", "defer"]
+
+# --- 3. COMPLETION INITIALIZATION ---
+[plugins.compinit]
+inline = 'autoload -Uz compinit && zsh-defer compinit'
+
+# --- 4. FZF ENGINE & TAB COMPLETION ---
+[plugins."fzf::setup"]
+local = "plugins/fzf"
+use = ["setup.zsh"]
+apply = ["source"]
+
+[plugins.fzf]
+github = "junegunn/fzf"
+use = ["shell/*.zsh"]
+apply = ["source"]
+
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
+# fzf-tab needs to be loaded after `compinit`, but before plugins which will wrap widgets, such as `zsh-autosuggestions` or `fast-syntax-highlighting`
+# Completions should be configured before `compinit`, as stated in the [zsh-completions manual installation guide](https://github.com/zsh-users/zsh-completions#manual-installation).
+apply = ["defer"]
+
+# [plugins.fzf-tab-config]
+[plugins."fzf-tab::styling"]
+local = "plugins/fzf"
+use = ["styling.zsh"]
+apply = ["defer"]
+
+# --- 5. BINARIES & DYNAMIC COMPLETIONS ---
+[plugins.sheldon-completion]
+inline = '[[ ! -f "${ZDOTCOMPLETIONS}/_sheldon" ]] && sheldon completions --shell zsh >| "${ZDOTCOMPLETIONS}/_sheldon" &|'
+
+[plugins.bun-completion]
+inline = '''
+if (( $+commands[bun] )); then
+  [[ ! -f "${ZDOTCOMPLETIONS}/_bun" ]] && SHELL=zsh bun completions >| "${ZDOTCOMPLETIONS}/_bun" &|
+fi'''
+
+# --- 5. KEYMAPPING ---
+[plugins."core::keymapping"]
+local = "core"
+use = ["keymapping/init.zsh"]
+apply = ["defer"]
