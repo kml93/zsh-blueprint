@@ -60,7 +60,20 @@ use = [
 ]
 apply = ["source"]
 
-# --- 2. PLUGINS (TURBO MODE) ---
+# --- 2. UNIFIED MANAGER (CRITICAL) ---
+# We load the manager early and synchronously (source) to ensure 
+# that management commands (like 'reload') are available immediately.
+[plugins.manager]
+local = "manager"
+use = ["init.zsh"]
+apply = ["source"]
+
+[plugins."manager::sheldon"]
+local = "manager/sheldon"
+use = ["init.zsh"]
+apply = ["source"]
+
+# --- 3. PLUGINS (TURBO MODE) ---
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 apply = ["fpath", "path", "defer"]
