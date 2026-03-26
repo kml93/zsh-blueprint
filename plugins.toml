@@ -28,7 +28,7 @@ fi"""
 # Sets P10K config path before engine loading to avoid wizard
 # To customize prompt, run `p10k configure` or edit ${ZDOTDIR}/themes/powerlevel10k-config.zsh.
 [plugins.powerlevel10k-config]
-inline = 'export POWERLEVEL9K_CONFIG_FILE="${ZDOTDIR}/themes/powerlevel10k-config.zsh"'
+inline = 'export POWERLEVEL9K_CONFIG_FILE="${ZDOTDIR}/themes/powerlevel10k-config.zsh";export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true'
 
 # --- 0. POWERLEVEL10K ---
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
@@ -52,11 +52,12 @@ github = "romkatv/zsh-defer"
 apply = ["source"]
 
 [plugins.core]
-local = "core"
+local = "~/.config/zsh/core"
+# local = "core"
 use = [
-  # "options.zsh",
-  # "history.zsh",
-  "*.zsh",
+  "options.zsh",
+  "history.zsh",
+  # "*.zsh",
 ]
 apply = ["source"]
 
@@ -64,12 +65,14 @@ apply = ["source"]
 # We load the manager early and synchronously (source) to ensure 
 # that management commands (like 'reload') are available immediately.
 [plugins.manager]
-local = "manager"
+local = "~/.config/zsh/manager"
+# local = "manager"
 use = ["init.zsh"]
 apply = ["source"]
 
 [plugins."manager::sheldon"]
-local = "manager/sheldon"
+local = "~/.config/zsh/manager/sheldon"
+# local = "manager/sheldon"
 use = ["init.zsh"]
 apply = ["source"]
 
@@ -96,7 +99,8 @@ inline = 'autoload -Uz compinit && zsh-defer compinit'
 
 # --- 4. FZF ENGINE & TAB COMPLETION ---
 [plugins."fzf::setup"]
-local = "plugins/fzf"
+local = "~/.config/zsh/plugins/fzf"
+# local = "plugins/fzf"
 use = ["setup.zsh"]
 apply = ["source"]
 
@@ -113,7 +117,8 @@ apply = ["defer"]
 
 # [plugins.fzf-tab-config]
 [plugins."fzf-tab::styling"]
-local = "plugins/fzf"
+local = "~/.config/zsh/plugins/fzf"
+# local = "plugins/fzf"
 use = ["styling.zsh"]
 apply = ["defer"]
 
@@ -129,6 +134,7 @@ fi'''
 
 # --- 5. KEYMAPPING ---
 [plugins."core::keymapping"]
-local = "core"
+local = "~/.config/zsh/core"
+# local = "core"
 use = ["keymapping/init.zsh"]
 apply = ["defer"]

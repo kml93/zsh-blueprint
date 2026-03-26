@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # ------------------------------------------------------------------------------
-# ZSH BLUEPRINT : BOOTSTRAPPER 
+# ZSH BLUEPRINT : BOOTSTRAPPER
 # ------------------------------------------------------------------------------
 # Role: Orchestrate shell startup in Sheldon or Vanilla (Legacy) mode.
 # ------------------------------------------------------------------------------
