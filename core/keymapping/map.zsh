@@ -67,3 +67,26 @@ keys+=(
   Tab             "\t"
   Shift-Tab       "${terminfo[kcbt]:-^[[Z}"
 )
+
+# Alternative sequences (terminal-specific, not in terminfo)
+keys+=(
+  Home-CSI         '^[[H'
+  End-CSI          '^[[F'
+  Home-App         '^[OH'
+  End-App          '^[OF'
+  Home-Rxvt        '^[[1~'
+  End-Rxvt         '^[[4~'
+  Up-App           '^[OA'
+  Down-App         '^[OB'
+  Right-App        '^[OC'
+  Left-App         '^[OD'
+
+  Ctrl-Delete-Alt  '^[[3\^'
+  Alt-Delete-Alt   '^[^[[3~'
+  Alt-Right-iTerm  '^[[1;9C'
+  Alt-Right-Alt    '^[^[[C'
+  Alt-Left-iTerm   '^[[1;9D'
+  Alt-Left-Alt     '^[^[[D'
+  Ctrl-Right-Rxvt  '^[Oc'
+  Ctrl-Left-Rxvt   '^[Od'
+)

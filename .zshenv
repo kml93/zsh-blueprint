@@ -36,7 +36,19 @@ export SHELDON_CONFIG_FILE="${SHELDON_CONFIG_DIR}/plugins.toml"
 # | EDITOR |
 # +--------+
 
-export EDITOR="nano"
+# Preferred editor for local or remote sessions
+if [[ -n ${SSH_CONNECTION} ]]; then
+  export EDITOR="nano"
+else
+  if command -v zeditor >/dev/null 2>&1; then
+    export EDITOR="zeditor"
+  elif command -v code >/dev/null 2>&1; then
+    export EDITOR="code --wait --new-window"
+  else
+    export EDITOR="nano"
+  fi
+fi
+
 export VISUAL="${EDITOR}"
 
 # +---------+
