@@ -43,6 +43,32 @@ for key widget (
   fi
 }
 
+# Terminal sequence remapping (Numpad + alternative escapes)
+bindkey -s '^[OM'    '^M'
+bindkey -s '^[Ok'    '+'
+bindkey -s '^[Om'    '-'
+bindkey -s '^[Oj'    '*'
+bindkey -s '^[Oo'    '/'
+bindkey -s '^[OX'    '='
+bindkey -s '^[OA'    '^[[A'
+bindkey -s '^[OB'    '^[[B'
+bindkey -s '^[OC'    '^[[C'
+bindkey -s '^[OD'    '^[[D'
+bindkey -s '^[OF'    '^[[F'
+bindkey -s '^[[4~'   '^[[F'
+bindkey -s '^[[8~'   '^[[F'
+bindkey -s '^[OH'    '^[[H'
+bindkey -s '^[[1~'   '^[[H'
+bindkey -s '^[[7~'   '^[[H'
+bindkey -s '^[[3\^'  '^[[3;5~'
+bindkey -s '^[^[[3~' '^[[3;3~'
+bindkey -s '^[[1;9C' '^[[1;3C'
+bindkey -s '^[^[[C'  '^[[1;3C'
+bindkey -s '^[[1;9D' '^[[1;3D'
+bindkey -s '^[^[[D'  '^[[1;3D'
+bindkey -s '^[Oc'    '^[[1;5C'
+bindkey -s '^[Od'    '^[[1;5D'
+
 # Additional special bindings
 bindkey "."   __kb_double_dot_expand
 bindkey "^?"  __kb_double_dot_contract
